@@ -1,33 +1,41 @@
-import  "reflect-metadata";
 
-const formatMetadataKey = Symbol("format");
+// 官方例子
+// import  "reflect-metadata";
 
-function format(formatString: string) {
-     return Reflect.metadata(formatMetadataKey, formatString);
-}
+// const formatMetadataKey = Symbol("format");
 
-function getFormat(target: any, propertyKey: string) {
-    return Reflect.getMetadata(formatMetadataKey, target, propertyKey);
-}
+// function format(formatString: string) {
+//      return Reflect.metadata(formatMetadataKey, formatString);
+// }
 
-const NameDecorator: PropertyDecorator = (target: Object, propertyKey: string | symbol) => {
-    console.log(target, propertyKey)
-}
+// function getFormat(target: any, propertyKey: string) {
+//     return Reflect.getMetadata(formatMetadataKey, target, propertyKey);
+// }
 
-class Greeter {
-    @format("Hello, %s")
-    greeting: string;
+// class Greeter {
+//     @format("Hello, %s")
+//     greeting: string;
 
-    @NameDecorator
-    name: string;
+//     constructor(message: string) {
+//         this.greeting = message;
+//     }
+//     greet() {
+//         let formatString = getFormat(this, "greeting");  
+//         console.log(formatString.replace("%s", this.greeting))
+//         return formatString.replace("%s", this.greeting);
+//     }
+// } 
+// new Greeter('我是').greet()
 
-    constructor(message: string) {
-        this.greeting = message;
+const initCarPropertyDec  = <T>(property: T) => {
+    return (target: object, propertyKey: string | symbol) => {
+        target[propertyKey] = property;
     }
-    greet() {
-        let formatString = getFormat(this, "greeting");  
-        console.log(formatString.replace("%s", this.greeting))
-        return formatString.replace("%s", this.greeting);
-    }
-} 
-new Greeter('我是').greet()
+}
+
+class Car {
+    @initCarPropertyDec('奔驰')
+    name!: string;
+}
+
+console.log(new Car().name)

@@ -1,4 +1,6 @@
 "use strict";
+// 官方例子
+// import  "reflect-metadata";
 var __decorate = (this && this.__decorate) || function (decorators, target, key, desc) {
     var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
     if (typeof Reflect === "object" && typeof Reflect.decorate === "function") r = Reflect.decorate(decorators, target, key, desc);
@@ -8,34 +10,35 @@ var __decorate = (this && this.__decorate) || function (decorators, target, key,
 var __metadata = (this && this.__metadata) || function (k, v) {
     if (typeof Reflect === "object" && typeof Reflect.metadata === "function") return Reflect.metadata(k, v);
 };
-Object.defineProperty(exports, "__esModule", { value: true });
-require("reflect-metadata");
-const formatMetadataKey = Symbol("format");
-function format(formatString) {
-    return Reflect.metadata(formatMetadataKey, formatString);
-}
-function getFormat(target, propertyKey) {
-    return Reflect.getMetadata(formatMetadataKey, target, propertyKey);
-}
-const NameDecorator = (target, propertyKey) => {
-    console.log(target, propertyKey);
+// const formatMetadataKey = Symbol("format");
+// function format(formatString: string) {
+//      return Reflect.metadata(formatMetadataKey, formatString);
+// }
+// function getFormat(target: any, propertyKey: string) {
+//     return Reflect.getMetadata(formatMetadataKey, target, propertyKey);
+// }
+// class Greeter {
+//     @format("Hello, %s")
+//     greeting: string;
+//     constructor(message: string) {
+//         this.greeting = message;
+//     }
+//     greet() {
+//         let formatString = getFormat(this, "greeting");  
+//         console.log(formatString.replace("%s", this.greeting))
+//         return formatString.replace("%s", this.greeting);
+//     }
+// } 
+// new Greeter('我是').greet()
+const initCarPropertyDec = (property) => {
+    return (target, propertyKey) => {
+        target[propertyKey] = property;
+    };
 };
-class Greeter {
-    constructor(message) {
-        this.greeting = message;
-    }
-    greet() {
-        let formatString = getFormat(this, "greeting");
-        console.log(formatString.replace("%s", this.greeting));
-        return formatString.replace("%s", this.greeting);
-    }
+class Car {
 }
 __decorate([
-    format("Hello, %s"),
+    initCarPropertyDec('奔驰'),
     __metadata("design:type", String)
-], Greeter.prototype, "greeting", void 0);
-__decorate([
-    NameDecorator,
-    __metadata("design:type", String)
-], Greeter.prototype, "name", void 0);
-new Greeter('我是').greet();
+], Car.prototype, "name", void 0);
+console.log(new Car().name);
