@@ -7,11 +7,67 @@ const decorator: ClassDecorator = (target) => {
     }
 }
 
-@decorator
-class Tank {
+// class BaseClass {
+//     getPosition() {
+//         return {
+//             x: 100,
+//             y: 200,
+//             z: 300,
+//         }
+//     }
+// }
+// class Tank extends BaseClass{}
 
+// class Plane extends BaseClass {}
+
+// class Animal extends BaseClass {}
+
+// console.log(
+//     new Tank().getPosition(),
+//     new Plane().getPosition(),
+//     new Plane().getPosition(),
+// )
+
+// TIPS: 能力扩展
+// const getPositionDecorator: ClassDecorator = (constructor: Function) => {
+//     constructor.prototype.getPosition = () => {
+//         return [100, 200]
+//     }
+// }
+
+// const addPetrolDecorator: ClassDecorator = (constructor: Function) => {
+//     constructor.prototype.addPetrol = () => {
+//         // do something
+//         console.log(`${constructor.name}进行加油`);
+//     }
+// }
+
+// @addPetrolDecorator
+// @getPositionDecorator
+// class Tank {}
+// @addPetrolDecorator
+// @getPositionDecorator
+// class Plane {}
+
+// @getPositionDecorator
+// class Animal {}
+
+
+// TIPS: 重载构造函数
+function classDecorator<T extends {new(...args:any[]):{}}>(constructor:T) {
+    return class extends constructor {
+        newProperty = "new property";
+        hello = "override";
+    }
 }
 
-class Player {
-
+@classDecorator
+class Greeter {
+    property = "property";
+    hello: string;
+    constructor(m: string) {
+        this.hello = m;
+    }
 }
+
+console.log(new Greeter("world"));

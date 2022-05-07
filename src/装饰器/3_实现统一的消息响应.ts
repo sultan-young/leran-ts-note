@@ -23,3 +23,4 @@ class LogoutController {
 
 new LoginController().login()
 new LogoutController().logout()
+
