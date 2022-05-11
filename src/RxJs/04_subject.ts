@@ -6,4 +6,10 @@ const subject = new Subject();
 
 
 subject.next(1);
+subject.next(2)
 subject.subscribe(value => console.log(value))
+subject.next(3)
+setTimeout(() => {
+    const subscription = subject.subscribe(value => console.log(value));
+    subscription.unsubscribe(); // 这里取消订阅后，不会影响到其他observer接受信息
+}, 1000);
