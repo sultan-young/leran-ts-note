@@ -53,6 +53,7 @@
 class Person {
     name = '小明';
     age = 0;
+    static haha = 1
     constructor(name: string, age: number) {
         // console.log(this.name)
         this.name = name;
@@ -75,13 +76,9 @@ class Person {
 // Person.prototype.age = '12'
 let age = 12;
 Object.defineProperty(Person.prototype, 'age', {
-    get() {
-        return age
-    },
-    set(value) {
-        age = value
-    }
-})
+    value: 1,
+    writable: true,
+});
 
 const xiaoyang = new Person('小杨', 25);
 const xiaolong = new Person('小龙', 35)
