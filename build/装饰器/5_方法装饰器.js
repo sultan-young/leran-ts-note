@@ -52,6 +52,7 @@ var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, ge
 // }
 const ErrorDecorator = (target, propertyKey, descriptor) => {
     const sourceMethod = descriptor.value;
+    console.log('step 0');
     descriptor.value = function (...args) {
         return __awaiter(this, void 0, void 0, function* () {
             try {
@@ -65,6 +66,9 @@ const ErrorDecorator = (target, propertyKey, descriptor) => {
     };
 };
 class MusicSystem {
+    constructor() {
+        this.errKey = 'keykey';
+    }
     getMusicById(name) {
         return new Promise((resolve, reject) => {
             setTimeout(() => {
@@ -106,4 +110,3 @@ __decorate([
 ], MusicSystem.prototype, "deleteByName", null);
 const musicSystem = new MusicSystem();
 musicSystem.play('凤凰传奇');
-musicSystem.deleteByName('凤凰传奇');

@@ -41,4 +41,3 @@ __decorate([
     initCarPropertyDec('奔驰'),
     __metadata("design:type", String)
 ], Car.prototype, "name", void 0);
-console.log(new Car().name);

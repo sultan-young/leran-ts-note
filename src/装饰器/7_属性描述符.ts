@@ -38,4 +38,4 @@ class Car {
     name!: string;
 }
 
-console.log(new Car().name)
+

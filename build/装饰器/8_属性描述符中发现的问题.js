@@ -43,40 +43,40 @@
 // // 结果为1。 先访问实例属性，后访问原型属性
 // console.log(xiaoyang.age, Monster.prototype.age, xiaoyang)
 // console.log(xiaolong.age, Monster.prototype.age, xiaolong)
-class Person {
-    constructor(name, age) {
-        this.name = '小明';
-        this.age = 0;
-        // console.log(this.name)
-        this.name = name;
-        this.age = age;
-    }
-}
-Person.haha = 1;
-// Person.prototype.name = '小李';
-// let _name = '小白';
-// Object.defineProperty(Person.prototype, 'name', {
-//     get() {
-//         return _name
-//     },
-//     set(value) {
-//         console.log('setter被访问')
-//         _name = value
+// class Person {
+//     name = '小明';
+//     age = 0;
+//     static haha = 1
+//     constructor(name: string, age: number) {
+//         // console.log(this.name)
+//         this.name = name;
+//         this.age = age;
 //     }
-// })
-// Person.prototype.age = '12'
-let age = 12;
-Object.defineProperty(Person.prototype, 'age', {
-    value: 1,
-    writable: true,
-});
-const xiaoyang = new Person('小杨', 25);
-const xiaolong = new Person('小龙', 35);
-// console.log(xiaoyang.name, Person.prototype.name)
-// console.log(xiaolong.name, Person.prototype.name)
-// 结果为1。 先访问实例属性，后访问原型属性
-console.log(xiaoyang.age, Person.prototype.age, xiaoyang);
-console.log(xiaolong.age, Person.prototype.age, xiaolong);
+// }
+// // Person.prototype.name = '小李';
+// // let _name = '小白';
+// // Object.defineProperty(Person.prototype, 'name', {
+// //     get() {
+// //         return _name
+// //     },
+// //     set(value) {
+// //         console.log('setter被访问')
+// //         _name = value
+// //     }
+// // })
+// // Person.prototype.age = '12'
+// let age = 12;
+// Object.defineProperty(Person.prototype, 'age', {
+//     value: 1,
+//     writable: true,
+// });
+// const xiaoyang = new Person('小杨', 25);
+// const xiaolong = new Person('小龙', 35)
+// // console.log(xiaoyang.name, Person.prototype.name)
+// // console.log(xiaolong.name, Person.prototype.name)
+// // 结果为1。 先访问实例属性，后访问原型属性
+// console.log(xiaoyang.age, Person.prototype.age, xiaoyang)
+// console.log(xiaolong.age, Person.prototype.age, xiaolong)
 // TIPS: 猜想1
 // 在类实例化之前，在类上的属性和方法都会被加在类的原型上。当类初始化完毕后，会把属性从类的原型上剔除。
 // 这个猜想解释了我为什么在原型上添加name的set，会在实例化时候触发一次。
@@ -92,3 +92,22 @@ console.log(xiaolong.age, Person.prototype.age, xiaolong);
  * mdn中有一句话：如果访问器属性是被继承的，他的get和set方法会在子对象的属性被访问或修改时候调用。
  * 如果这些方法用一个变量存值，该值会被所有对象共享。
  */
+class Person {
+    constructor(name) {
+        this.name = '小明';
+        this.name = name;
+    }
+}
+let _name = '';
+Object.defineProperty(Person.prototype, 'name', {
+    get() {
+        return _name;
+    },
+    set(value) {
+        _name = value;
+    }
+});
+const xiaoyang = new Person('小杨');
+const xiaolong = new Person('小龙');
+console.log(xiaoyang.name, Person.prototype.name);
+console.log(xiaolong.name, Person.prototype.name);

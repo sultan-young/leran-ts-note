@@ -36,6 +36,7 @@
 
 const ErrorDecorator: MethodDecorator = (target: Object, propertyKey: string | symbol, descriptor: PropertyDescriptor) => {
     const sourceMethod = descriptor.value;
+    console.log('step 0')
     descriptor.value = async function (...args: any) {
         try {
             await sourceMethod.apply(this, args);
@@ -46,6 +47,7 @@ const ErrorDecorator: MethodDecorator = (target: Object, propertyKey: string | s
     }
 }
 class MusicSystem {
+    errKey = 'keykey'
     getMusicById(name: string): Promise<{name: string, singer: string}> {
         return new Promise((resolve, reject) => {
             setTimeout(() => {
@@ -57,13 +59,11 @@ class MusicSystem {
             }, 1000);
         })
     }
-    
     @ErrorDecorator
     async play(name: string) {
         const music = await this.getMusicById(name);
         // ... do something
         console.log(`在曲库中找到了名为${music.name}的音乐，由${music.singer}进行演唱，敬请欣赏。`);
-
     }
 
     @ErrorDecorator
@@ -76,4 +76,3 @@ class MusicSystem {
 
 const musicSystem = new MusicSystem();
 musicSystem.play('凤凰传奇');
-musicSystem.deleteByName('凤凰传奇');
